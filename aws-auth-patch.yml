@@ -1,20 +1,18 @@
-
 apiVersion: v1
 data:
   mapRoles: |
-    - groups:
-      - system:bootstrappers
-      - system:nodes
-      rolearn: arn:aws:iam::629382421139:role/eksctl-simple-jwt-api-nodegroup-ng-c3538ec4
+    - rolearn: arn:aws:iam::629382421139:role/UdacityFlaskDeployCBKubectlRole>
       username: system:node:{{EC2PrivateDNSName}}
-    - groups:
-               - system:masters
-               rolearn: arn:aws:iam::629382421139:role/UdacityFlaskDeployCBKubectlRole
-               username: build
+      groups:
+        - system:bootstrappers
+        - system:nodes
   mapUsers: |
     []
 kind: ConfigMap
 metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"mapRoles":"- rolearn: arn:aws:iam::629382421139:role/UdacityFlaskDeployCBKubectlRole\u003e\n  username: system:node:{{EC2PrivateDNSName}}\n  groups:\n    - system:bootstrappers\n    - system:nodes\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"aws-auth","namespace":"kube-system"}}
   creationTimestamp: "2021-01-09T12:53:37Z"
   managedFields:
   - apiVersion: v1
@@ -31,11 +29,15 @@ metadata:
     fieldsV1:
       f:data:
         f:mapRoles: {}
-    manager: kubectl-patch
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+    manager: kubectl-client-side-apply
     operation: Update
-    time: "2021-01-09T13:29:29Z"
+    time: "2021-01-09T16:53:12Z"
   name: aws-auth
   namespace: kube-system
-  resourceVersion: "7544"
+  resourceVersion: "39659"
   selfLink: /api/v1/namespaces/kube-system/configmaps/aws-auth
   uid: 7e87897d-3237-4091-9ccf-dc320032acbf
